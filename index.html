@@ -42,6 +42,7 @@
       border-radius: 4px;
       cursor: pointer;
       font-size: 16px;
+      margin-right: 10px;
     }
     button:hover {
       background-color: #0056b3;
@@ -53,6 +54,16 @@
       border-radius: 4px;
       overflow-x: auto;
       font-family: monospace;
+      position: relative;
+    }
+    .copy-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: #28a745;
+    }
+    .copy-button:hover {
+      background-color: #218838;
     }
   </style>
 </head>
@@ -61,7 +72,9 @@
     <h1>HTML to Elementor JSON Converter</h1>
     <textarea id="htmlInput" placeholder="Paste your static HTML here..."></textarea>
     <button onclick="convertToElementorJSON()">Convert</button>
-    <pre id="jsonOutput"></pre>
+    <pre id="jsonOutput">
+      <button class="copy-button" onclick="copyToClipboard()">Copy</button>
+    </pre>
   </div>
 
   <script>
@@ -117,6 +130,20 @@
       } catch (error) {
         jsonOutput.textContent = `Error: ${error.message}`;
       }
+    }
+
+    // Function to copy JSON output to clipboard
+    function copyToClipboard() {
+      const jsonOutput = document.getElementById('jsonOutput').textContent;
+
+      navigator.clipboard.writeText(jsonOutput)
+        .then(() => {
+          alert('JSON copied to clipboard!');
+        })
+        .catch((error) => {
+          console.error('Failed to copy JSON:', error);
+          alert('Failed to copy JSON. Please try again.');
+        });
     }
   </script>
 </body>
